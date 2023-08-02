@@ -19,3 +19,6 @@ Route::get('/', function () {
 Route::get('/funcionarios', function () {
     return view('funcionarios.index');
 });
+Route::get('/funcionarios/novo', function () {
+    return view('funcionarios.create');
+});
