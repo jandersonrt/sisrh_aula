@@ -6,7 +6,7 @@
 <h1 class="fs-2 mb-3"> Cadastro de Funcionário</h1>
 
 <form class="row g-3" method="POST" action="{{ route('funcionarios.store') }}" enctype="multipart/form-data">
-  {{-- Cria hash de segurança para  --}}
+  {{-- Cria hash de segurança para submissão do formulário --}}
   @csrf
    @include('funcionarios.partials.form')
     <div class="col-12">
