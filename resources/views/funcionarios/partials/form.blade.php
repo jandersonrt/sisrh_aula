@@ -56,7 +56,10 @@
     <label for="data_desligamento" class="form-label">Data de Desligamento</label>
     <input type="date" class="form-control" id="data_desligamento" name="data_desligamento">
   </div>
-  <div class="col-12">
+  <div class="col-md-2">
+    <img src="{{ asset('images/sombra_funcionario.jpg')}}" alt="" class="img-thumnbnail">
+  </div>
+  <div class="col-10">
     <label for="foto" class="form-label">Foto</label>
     <input type="file" class="form-control" id="foto" name="foto">
   </div>
