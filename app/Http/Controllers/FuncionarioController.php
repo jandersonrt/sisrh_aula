@@ -7,7 +7,7 @@ use App\Models\Departamento;
 use App\Models\Funcionario;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use Image;
+use Intervention\Image\Facades\Image;
 
 class FuncionarioController extends Controller
 {
@@ -63,6 +63,7 @@ class FuncionarioController extends Controller
         //Salvar Foto
         Storage::put('public/funcionarios/'.$nomeArquivo, $imagem->encode());
        
+        //Upload sem redimensionar
        // $foto->store('public/funcionarios/');
        
         return $nomeArquivo;
@@ -78,10 +79,25 @@ class FuncionarioController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
+    
+
     public function edit(string $id)
     {
-        //
+        $funcionario = Funcionario::find($id);
+
+        if(!$funcionario){
+            return back();
+        }
+
+        $departamentos = Departamento::all()->sortBy('nome');
+        $cargos = Cargo::all()->sortBy('descricao');
+    
+        return view('funcionarios.edit', compact('funcionario','departamentos','cargos'));
     }
+
+  
+
+
 
     /**
      * Update the specified resource in storage.

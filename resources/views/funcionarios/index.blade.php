@@ -27,19 +27,19 @@
         <tbody>
             @foreach ($funcionarios as $funcionario)
                 <tr class="align-middle">
-                    <th scope="row">{{ $funcionario->id }}</th>
+                    <th clas="text-center" scope="row">{{ $funcionario->id }}</th>
                     <td class="text-center">
                       @if (empty($funcionario->foto))
                         <img src="/images/sombra_funcionario.jpg" alt="Foto" class="img-thumbnaill" width="70">
                       @else
-                        <img src="" alt="Fotos" class="img-thumbnaill" width="70">
+                        <img src="{{ (url("storage/funcionarios/$funcionario->foto")) }}" alt="Fotos" class="img-thumbnaill" width="70">
                       @endif
                     </td>
                     <td>{{ $funcionario->nome }}</td>
                     <td class="text-center">{{ $funcionario->cargo->descricao }}</td>
                     <td class="text-center">{{ $funcionario->departamento->nome }}</td>
                     <td>
-                        <a href="" title="Editar" class="btn btn-primary"><i class="bi bi-pen"></i></a>
+                        <a href="{{ route('funcionarios.edit', $funcionario->id) }}" title="Editar" class="btn btn-primary"><i class="bi bi-pen"></i></a>
                         <a href="" title="Deletar" class="btn btn-danger"><i class="bi bi-trash"></i></a>
                     </td>
                 </tr>
