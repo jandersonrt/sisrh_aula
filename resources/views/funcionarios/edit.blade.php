@@ -5,7 +5,7 @@
 @section('content')
 <h1 class="fs-2 mb-3"> Alterar Funcionário</h1>
 
-<form class="row g-3" method="POST" action="{{ route('funcionarios.store') }}" enctype="multipart/form-data">
+<form class="row g-3" method="POST" action="{{ route('funcionarios.update', $funcionario->id) }}" enctype="multipart/form-data">
   {{-- Cria hash de segurança para submissão do formulário --}}
   @csrf
   @method('PUT')
