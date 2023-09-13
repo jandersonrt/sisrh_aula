@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Cargo;
 use App\Models\Departamento;
+use App\Models\Cargo;
 use App\Models\Funcionario;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -17,8 +17,8 @@ class FuncionarioController extends Controller
     public function index()
     {
         $funcionarios = Funcionario::all()->sortBy('nome');
-        
-        // Receber os Dados do Banco atraves
+
+        // Receber os dados do banco através do model
         return view('funcionarios.index', compact('funcionarios'));
     }
 
@@ -27,10 +27,10 @@ class FuncionarioController extends Controller
      */
     public function create()
     {
-        // Retorna o formulário de cadastro de funcionario
+        //Retornar o formulário do Cadastro de funcionário
         $departamentos = Departamento::all()->sortBy('nome');
         $cargos = Cargo::all()->sortBy('descricao');
-        return view('funcionarios.create', compact('departamentos', 'cargos'));
+        return view('funcionarios.create', compact('departamentos','cargos'));
     }
 
     /**
@@ -38,36 +38,34 @@ class FuncionarioController extends Controller
      */
     public function store(Request $request)
     {
-        //
         $input = $request->toArray();
-        //dd($input);
+        // dd($input);
 
         $input['user_id'] = 1;
 
-        if($request->hasFile('foto')){
-            $input ["foto"] = $this->uploadFoto($request->foto);
+        if($request->hasFile('foto')) {
+            $input['foto'] = $this->uploadFoto($request->foto);
         }
 
-        //Insert de Dados do Usuário no Banco
+        // Insert de dados do usuário no banco
         Funcionario::create($input);
 
         return redirect()->route('funcionarios.index')->with('sucesso','Funcionário Cadastrado com Sucesso');
     }
-
-    private function uploadFoto($foto){
+    // Função para redimensionar e realizar o upload da foto
+    private function uploadFoto($foto) {
         $nomeArquivo = $foto->hashName();
 
         //Redimensionar foto
         $imagem = Image::make($foto)->fit(200,200);
-
-        //Salvar Foto
+        //Salvar arquivo da foto
         Storage::put('public/funcionarios/'.$nomeArquivo, $imagem->encode());
-       
-        //Upload sem redimensionar
-       // $foto->store('public/funcionarios/');
-       
+        // Upload sem redimensionar
+        // $foto->store('public/funcionarios/');
+
         return $nomeArquivo;
     }
+
     /**
      * Display the specified resource.
      */
@@ -79,25 +77,19 @@ class FuncionarioController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    
-
     public function edit(string $id)
     {
         $funcionario = Funcionario::find($id);
 
-        if(!$funcionario){
+        if(!$funcionario) {
             return back();
         }
 
         $departamentos = Departamento::all()->sortBy('nome');
         $cargos = Cargo::all()->sortBy('descricao');
-    
-        return view('funcionarios.edit', compact('funcionario','departamentos','cargos'));
+
+        return view('funcionarios.edit', compact('funcionario', 'departamentos', 'cargos'));
     }
-
-  
-
-
 
     /**
      * Update the specified resource in storage.
@@ -108,14 +100,14 @@ class FuncionarioController extends Controller
 
         $funcionario = Funcionario::find($id);
 
-        if($request->hasFile('foto')){
+        if($request->hasFile('foto')) {
             Storage::delete('public/funcionarios/'.$funcionario['foto']);
             $input['foto'] = $this->uploadFoto($request->foto);
         }
 
         $funcionario->fill($input);
         $funcionario->save();
-        return redirect()->route('funcionarios.index')->with('sucesso','Funcionário alterado com sucesso!');
+        return redirect()->route('funcionarios.index')->with('Sucesso', 'Funcionário alterado com sucesso!');
     }
 
     /**
@@ -126,12 +118,13 @@ class FuncionarioController extends Controller
         $funcionario = Funcionario::find($id);
         // dd($funcionario);
 
-        if($funcionario['foto'] != null){
+        //Exclui a foto do funcionário
+        if($funcionario['foto'] != null) {
             Storage::delete('public/funcionarios/'.$funcionario['foto']);
         }
-
+        //Apagando o registro no banco de dados
         $funcionario->delete();
 
-        return redirect()->route('funcionarios.index')->with('sucesso','Funcionário excluído com sucesso.');
+        return redirect()->route('funcionarios.index')->with('sucesso', 'Funcionário excluido com sucesso.');
     }
 }

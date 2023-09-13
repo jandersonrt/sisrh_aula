@@ -1,7 +1,7 @@
-<div class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark" 
-    style="width: 200px;">
+<div class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark" style="width: 200px;">
+
     <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
-        <img src="{{ asset('images/logo_black.png') }}" height="30px" alt="Logo SisRH"> 
+     <img src="{{  asset('images/logo_black.png') }}" height="35px"  alt="Logo SIS" >
     </a>
     <hr>
     <ul class="nav nav-pills flex-column mb-auto">
@@ -12,22 +12,27 @@
         </li>
         <li class="nav-item">
             <a href="{{ route('funcionarios.index') }}" class="nav-link text-white btn btn-primary text-start">
-                <i class="bi bi-people mx-2 fs-5 align-midlle "></i>Funcionários
+                <i class="bi bi-people mx-2 fs-5 align-middle"></i>Funcionários
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{{ route('cargos.index') }}" class="nav-link text-white btn btn-primary text-start">
+                <i class="bi bi-person-vcard mx-2 fs-5 align-middle"></i>Cargos
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{{ route('departamentos.index') }}" class="nav-link text-white btn btn-primary text-start">
+                <i class="bi bi-house-gear-fill mx-2 fs-5 align-middle"></i>Departamentos
             </a>
         </li>
         <li class="nav-item">
             <a href="#" class="nav-link text-white btn btn-primary text-start">
-                <i class="bi bi-person-vcard mx-2 fs-5 align-midlle "></i>Cargo
+                <i class="bi bi-star mx-2 fs-5 align-middle"></i>Benefícios
             </a>
         </li>
         <li class="nav-item">
-            <a href="#" class="nav-link text-white btn btn-primary text-start">
-                <i class="bi bi-house-check mx-2 fs-5 align-midlle "></i>Departamento
-            </a>
-        </li>
-        <li class="nav-item">
-            <a href="#" class="nav-link text-white btn btn-primary text-start">
-                <i class="bi bi-star mx-2 fs-5 align-midlle "></i>Benefícios
+            <a href="{{ route('usuarios.index') }}" class="nav-link text-white btn btn-primary text-start">
+                <i class="bi bi-person mx-2 fs-5 align-middle"></i>Usuários
             </a>
         </li>
     </ul>
