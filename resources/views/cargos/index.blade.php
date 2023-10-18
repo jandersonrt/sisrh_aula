@@ -14,6 +14,11 @@
      <div class="alert alert-success text-center">{{ Session::get('sucesso') }}</div>
     @endif
 
+    <x-busca>
+        <x-slot name="rota">{{ route('cargos.index') }}</x-slot>
+        <x-slot name="tipo">Cargos</x-slot>
+      </x-busca>
+
     <table class="table table-striped">
         <thead class="table-dark">
             <tr class="text-center">

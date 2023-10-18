@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CargoController;
 use App\Http\Controllers\DepartamentoController;
+use App\Http\Controllers\LoginController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FuncionarioController;
 use App\Http\Controllers\UsuarioController;
@@ -17,9 +18,9 @@ use App\Http\Controllers\UsuarioController;
 |
 */
 
-Route::get('/', function () {
-    return view('login');
-});
+Route::get('/', [LoginController::class, 'index'])->name('login.index');
+Route::post('/auth', [LoginController::class, 'auth'])->name('login.auth');
+Route::get('/logout', [LoginController::class, 'logout'])->name('login.logout');
 
 Route::get('/funcionarios', [FuncionarioController::class, 'index'])->name('funcionarios.index');
 Route::get('/funcionarios/create', [FuncionarioController::class, 'create'])->name('funcionarios.create');
@@ -45,3 +46,4 @@ Route::post('/cargos', [CargoController::class, 'store'])->name('cargos.store');
 Route::get('/cargos/{id}/edit', [CargoController::class, 'edit'])->name('cargos.edit');
 Route::put('/cargos/{id}', [CargoController::class, 'update'])->name('cargos.update');
 Route::delete('/cargos/{id}', [CargoController::class, 'destroy'])->name('cargos.destroy');
+
