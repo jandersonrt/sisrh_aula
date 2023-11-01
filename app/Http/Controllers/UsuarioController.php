@@ -4,27 +4,40 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class UsuarioController extends Controller
 {
+    public function __construct(){
+        $this->middleware('auth');
+    }
      /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $usuarios = User::all()->sortBy('name');
-
-        // Receber os dados do banco através do model
+        if(Gate::allows('tipo-user')){
+            $usuarios = User::all()->sortBy('name');
+       
         return view('usuarios.index', compact('usuarios'));
+    }else{
+        return back();
     }
+    }
+        
+
 
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
+        if(Gate::allows('tipo-user')){
         //Retornar o formulário do Cadastro de Usuario
         return view('usuarios.create');
+    }else{
+        return back();
+    }
     }
 
     /**
@@ -32,6 +45,7 @@ class UsuarioController extends Controller
      */
     public function store(Request $request)
     {
+        if(Gate::allows('tipo-user')){
         $input = $request->toArray(); //Array que recebe os valores dos campos da view através do objeto request
 
         $input['password'] = bcrypt($input['password']); // Linha que criptografa a senha do usuário com o método bcrypt, antes de guardar no banco
@@ -40,6 +54,9 @@ class UsuarioController extends Controller
         User::create($input);
 
         return redirect()->route('usuarios.index')->with('sucesso','Usuário Cadastrado com Sucesso');
+    }else{
+        return back();
+    }
     }
 
     /**
@@ -61,7 +78,13 @@ class UsuarioController extends Controller
             return back();
         }
 
-        return view('usuarios.edit', compact('usuario'));
+        if(auth->user()->id == $usuario['id']|| auth()->user()->type == 'admin'){
+            return view('usuarios.edit', compact('usuario'));
+        } else{
+            return back();
+        }
+        
+            
     }
 
     /**

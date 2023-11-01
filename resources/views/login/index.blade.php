@@ -12,6 +12,10 @@
     <div class="bg-white container p-5 position-absolute top-50 start-50 translate-middle rounded-4 shadow" style="max-width: 400px">
         <img src="{{  asset('images/logo_color.png') }}" alt="SisRH" height="40" class="d-block mx-auto mb-4">
 
+        @isset($_GET['msg'])
+            <div class="alert alert-danger text-center p-2">Área Restrita. Realize o login para acessar.</div>
+        @endisset
+
         @if ($errors->any())
             @foreach ($erros->all() as $error)
                 <div class="alert alert-warning text-center p-2">{{ $error }}</div>
