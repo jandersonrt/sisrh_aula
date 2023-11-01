@@ -78,7 +78,7 @@ class UsuarioController extends Controller
             return back();
         }
 
-        if(auth->user()->id == $usuario['id']|| auth()->user()->type == 'admin'){
+        if(auth()->user()->id == $usuario['id']|| auth()->user()->type == 'admin'){
             return view('usuarios.edit', compact('usuario'));
         } else{
             return back();
