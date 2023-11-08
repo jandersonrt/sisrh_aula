@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CargoController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DepartamentoController;
 use App\Http\Controllers\LoginController;
 use Illuminate\Support\Facades\Route;
@@ -21,6 +22,8 @@ use App\Http\Controllers\UsuarioController;
 Route::get('/', [LoginController::class, 'index'])->name('login.index');
 Route::post('/auth', [LoginController::class, 'auth'])->name('login.auth');
 Route::get('/logout', [LoginController::class, 'logout'])->name('login.logout');
+
+Route::get('/dashboad', [DashboardController::class,'index'])->name('dashboard.index');
 
 Route::get('/funcionarios', [FuncionarioController::class, 'index'])->name('funcionarios.index');
 Route::get('/funcionarios/create', [FuncionarioController::class, 'create'])->name('funcionarios.create');

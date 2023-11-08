@@ -105,7 +105,13 @@ class UsuarioController extends Controller
 
         $usuario->fill($input);
         $usuario->save();
-        return redirect()->route('usuarios.index')->with('Sucesso', 'Usuário alterado com sucesso!');
+        if($usuario->type == "admin"){
+            return redirect()->route('usuarios.index')->with('sucesso', 'Usuário alterado com sucesso!');
+
+        }else{
+            return redirect()->route('usuarios.edit', $usuario->id)->with('sucesso', 'Usuário alterado com sucesso!');
+        }
+       
     }
 
     /**

@@ -3,6 +3,9 @@
 @section('title', 'Cadastro de Usuário - SISRH ')
 
 @section('content')
+    @if (Session::get('sucesso'))
+        <div class="alert alert-success text-center">{{ Session::get('sucesso') }}</div>
+    @endif
     <h1 class="fs-2 mb-3">Alterar Usuário</h1>
 
     <form class="row g-3" method="POST" action="{{ route('usuarios.update', $usuario->id) }}" enctype="multipart/form-data">
@@ -10,10 +13,10 @@
         @csrf
         @method('PUT')
         @include('usuarios.partials.form')
-      <!--Sistema de grid: col-md-6(2, 4, 6, 12)-->
+        <!--Sistema de grid: col-md-6(2, 4, 6, 12)-->
         <div class="col-12">
-          <button type="submit" class="btn btn-primary">Cadastrar</button>
-          <a href="{{ route('usuarios.index') }}" class="btn btn-danger">Cancelar</a>
+            <button type="submit" class="btn btn-primary">Cadastrar</button>
+            <a href="{{ route('usuarios.index') }}" class="btn btn-danger">Cancelar</a>
         </div>
-      </form>
+    </form>
 @endsection
