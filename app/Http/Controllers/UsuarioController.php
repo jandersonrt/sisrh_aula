@@ -8,36 +8,41 @@ use Illuminate\Support\Facades\Gate;
 
 class UsuarioController extends Controller
 {
-    public function __construct(){
+    /* Verificar se o usuário estar logado no sistema */
+    public function __construct()
+    {
         $this->middleware('auth');
     }
+
      /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        if(Gate::allows('tipo-user')){
-            $usuarios = User::all()->sortBy('name');
-       
-        return view('usuarios.index', compact('usuarios'));
-    }else{
-        return back();
-    }
-    }
-        
+        /* Verifica se o usuário tem permissão */
+        if(Gate::allows('tipo_usuario')){
+            $usuarios = User::where('name', 'like', '%'.$request->busca.'%')->orderby('name', 'asc')->paginate(3);
 
+            $totalUsuarios = User::all()->count();
+
+            // Receber os dados do banco através do model
+            return view('usuarios.index', compact('usuarios', 'totalUsuarios'));
+        } else {
+            return back();
+        }
+    }
 
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
-        if(Gate::allows('tipo-user')){
-        //Retornar o formulário do Cadastro de Usuario
-        return view('usuarios.create');
-    }else{
-        return back();
-    }
+        if(Gate::allows('tipo_usuario')){
+            //Retornar o formulário do Cadastro de Usuario
+            return view('usuarios.create');
+        } else {
+            return back();
+        }
     }
 
     /**
@@ -45,18 +50,18 @@ class UsuarioController extends Controller
      */
     public function store(Request $request)
     {
-        if(Gate::allows('tipo-user')){
-        $input = $request->toArray(); //Array que recebe os valores dos campos da view através do objeto request
+        if(Gate::allows('tipo_usuario')){
+            $input = $request->toArray(); //Array que recebe os valores dos campos da view através do objeto request
 
-        $input['password'] = bcrypt($input['password']); // Linha que criptografa a senha do usuário com o método bcrypt, antes de guardar no banco
+            $input['password'] = bcrypt($input['password']); // Linha que criptografa a senha do usuário com o método bcrypt, antes de guardar no banco
 
-        // Insert de dados do usuário no banco
-        User::create($input);
+            // Insert de dados do usuário no banco
+            User::create($input);
 
-        return redirect()->route('usuarios.index')->with('sucesso','Usuário Cadastrado com Sucesso');
-    }else{
-        return back();
-    }
+            return redirect()->route('usuarios.index')->with('sucesso','Usuário Cadastrado com Sucesso');
+        } else {
+            return back();
+        }
     }
 
     /**
@@ -78,13 +83,12 @@ class UsuarioController extends Controller
             return back();
         }
 
-        if(auth()->user()->id == $usuario['id']|| auth()->user()->type == 'admin'){
+        if(auth()->user()->id == $usuario['id'] || auth()->user()->tipo == 'admin'){
             return view('usuarios.edit', compact('usuario'));
-        } else{
+        } else {
             return back();
         }
-        
-            
+
     }
 
     /**
@@ -105,13 +109,12 @@ class UsuarioController extends Controller
 
         $usuario->fill($input);
         $usuario->save();
-        if($usuario->type == "admin"){
-            return redirect()->route('usuarios.index')->with('sucesso', 'Usuário alterado com sucesso!');
 
-        }else{
+        if($usuario->tipo == "admin"){
+            return redirect()->route('usuarios.index')->with('sucesso', 'Usuário alterado com sucesso!');
+        } else {
             return redirect()->route('usuarios.edit', $usuario->id)->with('sucesso', 'Usuário alterado com sucesso!');
         }
-       
     }
 
     /**

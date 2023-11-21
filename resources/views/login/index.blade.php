@@ -10,24 +10,22 @@
 </head>
 <body class="bg-primary">
     <div class="bg-white container p-5 position-absolute top-50 start-50 translate-middle rounded-4 shadow" style="max-width: 400px">
-        <img src="{{  asset('images/logo_color.png') }}" alt="SisRH" height="40" class="d-block mx-auto mb-4">
+        <img src="{{ asset('images/logo_color.png') }}" alt="SisRH" height="40" class="d-block mx-auto mb-4">
 
         @isset($_GET['msg'])
-            <div class="alert alert-danger text-center p-2">Área Restrita. Realize o login para acessar.</div>
+            <div class="alert alert-danger text-center p-2">Área restrita. Realize o login para acessar.</div>
         @endisset
 
         @if ($errors->any())
-            @foreach ($erros->all() as $error)
+            @foreach ($errors->all() as $errors)
                 <div class="alert alert-warning text-center p-2">{{ $error }}</div>
             @endforeach
         @endif
 
-        @if (Session::get('erro'))
-            <div class="alert alert-danger text-center p-2">
-                {{ Session::get('erro') }}
-            </div>
+        @if (Session::get('erro_login'))
+            <div class="alert alert-danger text-center p-2">{{ Session::get('erro_login') }}</div>
         @endif
-    
+
         <form action="{{ route('login.auth') }}" class="row g-3" method="POST">
             @csrf
             <div>
@@ -38,11 +36,9 @@
                 <label for="password" class="form-label fs-5">Senha</label>
                 <input type="password" id="password" name="password" class="form-control form-control-lg" required>
             </div>
-           
+
             <button type="submit" class="btn btn-primary btn-lg">Entrar</button>
-          
         </form>
     </div>
-    
 </body>
 </html>

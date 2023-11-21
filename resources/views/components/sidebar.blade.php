@@ -26,20 +26,17 @@
             </a>
         </li>
         <li class="nav-item">
-            <a href="#" class="nav-link text-white btn btn-primary text-start">
+            <a href="{{ route('beneficios.index') }}" class="nav-link text-white btn btn-primary text-start">
                 <i class="bi bi-star mx-2 fs-5 align-middle"></i>Benefícios
             </a>
         </li>
-        
-        @can('tipo-user')
-        <li class="nav-item">
-            <a href="{{ route('usuarios.index') }}" class="nav-link text-white btn btn-primary text-start">
-                <i class="bi bi-person mx-2 fs-5 align-middle"></i>Usuários
-            </a>
-        </li>
+        @can('tipo_usuario')
+            <li class="nav-item">
+                <a href="{{ route('usuarios.index') }}" class="nav-link text-white btn btn-primary text-start">
+                    <i class="bi bi-person mx-2 fs-5 align-middle"></i>Usuários
+                </a>
+            </li>
         @endcan
-       
-       
     </ul>
     <hr>
     <div class="dropdown">

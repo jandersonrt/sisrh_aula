@@ -9,19 +9,24 @@ use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
-    public function __construct(){
+    /* Verificar se o usuário estar logado no sistema */
+    public function __construct()
+    {
         $this->middleware('auth');
     }
-    
-    public function index(){
+
+    public function index()
+    {
         $totalFuncionarios = Funcionario::where('status','on')->count();
         $totalCargos = Cargo::all()->count();
         $totalDepartamentos = Departamento::all()->count();
-        $somaSalario = Funcionario::where('status','on')->sum('salario');
+        $somaSalarios = Funcionario::where('status','on')->sum('salario');
 
+        // Dados dos departamentos
         $departamentos = Departamento::all()->sortBy('nome');
+        // Dados dos cargos
         $cargos = Cargo::all()->sortBy('descricao');
 
-        return view('dashboard.index',compact('totalFuncionarios','totalCargos','totalDepartamentos','somaSalario','departamentos', 'cargos'));
+        return view('dashboard.index', compact('totalFuncionarios', 'totalCargos', 'totalDepartamentos', 'somaSalarios', 'departamentos', 'cargos'));
     }
 }

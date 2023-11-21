@@ -1,6 +1,6 @@
 @extends('layouts.default')
 
-@section('title', 'Usuários - SIS ')
+@section('title', 'Usuários - SISRH ')
 
 @section('content')
      <x-btn-create>
@@ -10,9 +10,16 @@
 
     <h1 class="f-2 mb-3">Usuários</h1>
 
+    <p>Total de Usuários: {{ $totalUsuarios }}</p>
+
     @if (Session::get('sucesso'))
      <div class="alert alert-success text-center">{{ Session::get('sucesso') }}</div>
     @endif
+
+    <x-busca>
+        <x-slot name="rota">{{ route('usuarios.index') }}</x-slot>
+        <x-slot name="tipo">Usuario</x-slot>
+    </x-busca>
 
     <table class="table table-striped">
         <thead class="table-dark">
@@ -33,7 +40,7 @@
                     <td class="text-center">{{ $usuario->tipo }}</td>
                     <td>
                         <a href="{{ route('usuarios.edit', $usuario->id) }}" title="Editar" class="btn btn-primary"> <i class="bi bi-pen"></i></a>
-                        <a href="" title="Deletar" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modal-delete-#"><i class="bi bi-trash"></i></a>
+                        <a href="usuarios.destroy" title="Deletar" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modal-delete-{{ $usuario->id }}"><i class="bi bi-trash"></i></a>
                         {{-- Inserir o componente modal na view --}}
                         <x-modal-delete>
                             <x-slot name="id">{{ $usuario->id }}</x-slot>
@@ -46,4 +53,12 @@
             @endforeach
         </tbody>
     </table>
+
+    <style>
+        .pagination{
+            justify-content: center;
+        }
+    </style>
+    {{ $usuarios->links() }}
+
 @endsection

@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use illuminate\Pagination\Paginator;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
